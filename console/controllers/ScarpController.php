@@ -30,10 +30,9 @@ class ScarpController extends Controller
             return 1;
         }
 
-        $flowUrl = $this->getFlowUrl($flow);
-        $dom = $this->loadPage($flowUrl);
+        $flowUrl = \Yii::$app->params['habra.flow.url'] . '/' . $flow . '/page1';
 
-        if ($dom) {
+        if ($dom = $this->loadPage($flowUrl)) {
             $nodes = \Yii::$app->scarper->getNodes($dom, \Yii::$app->params['habra.postLink.xpath']);
             foreach ($nodes as $node) {
                 /**@var $node \DOMElement */
@@ -47,11 +46,6 @@ class ScarpController extends Controller
         }
 
         return 0;
-    }
-
-    protected function getFlowUrl($flow, $page = 1)
-    {
-        return \Yii::$app->params['habra.flow.url'] . '/' . $flow . '/page' . $page;
     }
 
     /**
