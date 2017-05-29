@@ -6,6 +6,8 @@ namespace common\components;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use yii\base\Exception;
+use DOMDocument;
+use DOMXPath;
 
 class Scarper
 {
@@ -27,13 +29,14 @@ class Scarper
     public function load($page)
     {
         try {
-            $response = $this->webClient->get($page);
+            $url = $this->webClient->getBaseUrl() . '/' . $page;
+            $response = $this->webClient->get($url);
         } catch (ClientException $e) {
             throw new Exception($e->getMessage());
         }
 
         $html = $response->getBody();
-        $this->dom = new \DOMComment();
+        $this->dom = new DOMDocument();
 
         // Ignore errors caused by unsupported HTML5 tags
         libxml_use_internal_errors(true);
@@ -73,7 +76,7 @@ class Scarper
      */
     public function getNodes($xpath, $parent = null)
     {
-        $DomXpath = new \DOMXPath($this->dom);
+        $DomXpath = new DOMXPath($this->dom);
         $nodes = $DomXpath->query($xpath, $parent);
         return $nodes;
     }
