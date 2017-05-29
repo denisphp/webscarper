@@ -31,8 +31,8 @@ class ArticleGii extends \yii\db\ActiveRecord
     {
         return [
             [['flow', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'url'], 'string'],
             [['created_at', 'updated_at'], 'required'],
-            [['title', 'url'], 'string', 'max' => 255],
         ];
     }
 

@@ -28,6 +28,7 @@ class ArticleContent extends ArticleContentGii
     {
         return [
             [['article_id', 'version', 'created_at', 'updated_at'], 'integer'],
+            ['version', 'default', 'value' => 1],
             [['html'], 'string'],
         ];
     }

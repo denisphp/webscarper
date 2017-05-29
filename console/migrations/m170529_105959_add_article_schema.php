@@ -12,8 +12,8 @@ class m170529_105959_add_article_schema extends Migration
         $this->createTable(self::TABLE, [
             'id' => $this->primaryKey(),
             'flow' => $this->integer(),
-            'title' => $this->string(),
-            'url' => $this->string(),
+            'title' => $this->text(),
+            'url' => $this->text(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);

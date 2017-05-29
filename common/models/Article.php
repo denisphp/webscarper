@@ -28,7 +28,7 @@ class Article extends ArticleGii
     {
         return [
             [['flow', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'url'], 'string', 'max' => 255],
+            [['title', 'url'], 'string'],
         ];
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use common\components\Scarper;
+use common\models\Article;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
