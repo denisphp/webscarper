@@ -5,6 +5,7 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'scarper' => 'common\components\Scarper'
+        'scarper' => 'common\components\Scarper',
+        'article' => 'common\components\Article'
     ],
 ];

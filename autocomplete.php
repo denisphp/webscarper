@@ -19,6 +19,7 @@ class Yii extends \yii\BaseYii
  * Used for properties that are identical for both WebApplication and ConsoleApplication
  *
  * @property \common\components\Scarper $scarper
+ * @property \common\components\Article $article
  *
  */
 abstract class BaseApplication extends yii\base\Application

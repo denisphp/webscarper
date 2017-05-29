@@ -3,9 +3,6 @@
 namespace console\controllers;
 
 use common\helpers\Flow;
-use common\models\Article;
-use common\models\ArticleContent;
-use yii\base\Exception;
 use yii\console\Controller;
 use yii\helpers\Console;
 
@@ -37,39 +34,19 @@ class ScarpController extends Controller
         $dom = $this->loadPage($flowUrl);
 
         if ($dom) {
-            $nodes = \Yii::$app->scarper->getNodes($dom, '//*[@class="post__title_link"]');
+            $nodes = \Yii::$app->scarper->getNodes($dom, \Yii::$app->params['habra.postLink.xpath']);
             foreach ($nodes as $node) {
                 /**@var $node \DOMElement */
-
                 $href = $node->getAttribute('href');
                 $articleDom = $this->loadPage($href);
-                $exists = Article::find()->where(['url' => $href])->exists();
-
-                if (!$exists && $articleDom) {
-                    try {
-                        $articleBody = \Yii::$app->scarper->getNode($articleDom, '//*[@class="post post_full"]');
-                        $title = \Yii::$app->scarper->getNode($articleDom, '//*[@class="post__title-text"]');
-
-                        $transaction = \Yii::$app->db->beginTransaction();
-
-                        $article = new Article();
-                        $article->flow = $flowId;
-                        $article->title = $title->nodeValue;
-                        $article->url = $href;
-                        if ($article->save()) {
-                            $articleContent = new ArticleContent();
-                            $articleContent->article_id = $article->id;
-                            $articleContent->html = $articleBody->nodeValue;
-                            $articleContent->save();
-                        }
-
-                        $transaction->commit();
-                    } catch (Exception $e) {
-                        $transaction->rollBack();
-                    }
+                $exists = \Yii::$app->article->exists($href);
+                if ($articleDom && !$exists) {
+                    \Yii::$app->article->createNewRecord($href, $articleDom, $flowId);
                 }
             }
         }
+
+        return 0;
     }
 
     protected function getFlowUrl($flow, $page = 1)
