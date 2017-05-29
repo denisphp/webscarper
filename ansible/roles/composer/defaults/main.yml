@@ -1,0 +1,4 @@
+---
+# defaults file for composer
+
+composer_global_require: "fxp/composer-asset-plugin:~1.1.1" # set "" for skip

@@ -1,0 +1,9 @@
+---
+# defaults file for phppgadmin
+
+phppgadmin_template_src_file: phppgadmin_config.inc.php.j2 # Path of a Jinja2 formatted template on the local server. This can be a relative or absolute path.
+phppgadmin_version: master # REL_5-1-0, REL_4-2
+
+# If extra login security is true, then logins via phpPgAdmin with no password or certain usernames (pgsql, postgres, root, administrator) will be denied.
+# Only set this false once you have read the FAQ and understand how to change PostgreSQL's pg_hba.conf to enable passworded local connections.
+phppgadmin_extra_login_security: true

@@ -1,0 +1,13 @@
+---
+# tasks file for phppgadmin
+
+- name: download and install phpPgAdmin
+  shell: creates=/usr/share/phppgadmin/index.php cd /tmp
+          && wget "https://github.com/phppgadmin/phppgadmin/archive/{{ phppgadmin_version }}.zip" -O phppgadmin.zip
+          && unzip phppgadmin.zip
+          && mv "/tmp/phppgadmin-{{ phppgadmin_version }}" /usr/share/phppgadmin
+  tags: phpPgAdmin
+
+- name: copy phpPgAdmin config
+  template: src="{{ phppgadmin_template_src_file }}" dest=/usr/share/phppgadmin/conf/config.inc.php
+  tags: phpPgAdmin

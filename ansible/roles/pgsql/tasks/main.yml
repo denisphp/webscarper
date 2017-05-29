@@ -1,0 +1,47 @@
+---
+# tasks file for pgsql
+
+- name: Add PostgreSQL Repository
+  become: yes
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' state=present
+
+- name: Add Keys for PostgreSQL Repository
+  become: yes
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+- name: Update apt
+  become: yes
+  apt: update_cache=yes
+
+- name: Install PostgreSQL Packages
+  become: yes
+  apt: pkg="{{ item }}" state=latest
+  with_items:
+    - libpq-dev
+    - "postgresql-{{ pgdb_version }}"
+    - "postgresql-client-{{ pgdb_version }}"
+    - python-pygresql
+    - python-psycopg2
+  notify: restart postgresql
+
+- name: set postgres password
+  shell: sudo -u postgres psql -c "ALTER USER {{ pgdb_sudo_user }} PASSWORD '{{ pgdb_sudo_pass }}';"
+  when: pgdb_sudo_pass != ''
+
+- name: Create databases
+  become: yes
+  become_user: "{{ pgdb_sudo_user }}"
+  postgresql_db: name="{{ item }}" state=present
+  with_items: "{{ pgdb_databases }}"
+
+- name: Create users
+  become: yes
+  become_user: "{{ pgdb_sudo_user }}"
+  postgresql_user: name="{{ item.user }}" password="{{ item.password }}" db="{{ item.database }}" priv=ALL
+  with_items: "{{ pgdb_users }}"
+
+- name: copy PostgreSQL config
+  template: src="{{ pgdb_conf_src_file }}" dest="/etc/postgresql/{{pgdb_version}}/main/postgresql.conf" owner=postgres group=postgres mode=0644
+
+- name: be sure PostgreSQL is running
+  service: name=postgresql state=restarted enabled=yes

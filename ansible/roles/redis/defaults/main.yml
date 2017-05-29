@@ -1,0 +1,6 @@
+---
+# defaults file for redis
+
+redis_conf_src_file: redis.conf.j2 # Path of a Jinja2 formatted template on the local server. This can be a relative or absolute path.
+redis_upstart_src_file: upstart_redis.conf.j2 # Path of a Jinja2 formatted template on the local server. This can be a relative or absolute path.
+redis_version: 3.0.6

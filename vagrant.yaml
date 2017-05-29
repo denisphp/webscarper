@@ -1,0 +1,28 @@
+vm:
+  boot_timeout: 300
+  box: "ubuntu/trusty64"
+#  For box "ubuntu/trusty64" box_url by default: https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/20151208.1.0/providers/virtualbox.box
+#  box_url: "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  check_update: true
+  cpus: "auto"
+#  memory: "auto" # For autodetect (1/4 system memory)
+  memory: "auto"
+  cpuexecutioncap: "50"
+  name: "webscarper"
+sync:
+  synced_folder: "." # or "/var/www/<project-name>"
+  vagrant_folder: "/var/www/webscarper/" # or "/var/www/<project-name>"
+  second_synced_folder: ""
+  second_vagrant_folder: ""
+network:
+  private_ip: "192.168.33.36"
+  http_port: 8888
+host:
+  name: "webscarper.local"
+  aliases: [
+    "db.webscarper.local",
+    "api.webscarper.local"
+  ]
+ansible:
+  playbook: "ansible/dev.yml"
+  inventory_path: "ansible/dev"

@@ -1,0 +1,23 @@
+- stat: path="{{ folder }}"/auth.json
+  register: github_auth_json_file
+
+- stat: path="{{ folder }}"/vendor
+  register: vendor_folder
+
+- name: copy github auth file
+  shell: cd "{{ folder }}" && cp auth.json ~/
+  when: github_auth_json_file.stat.exists
+
+- name: install fxp/composer-asset-plugin
+  shell: cd "{{ folder }}" && composer global require "{{ composer_global_require }}"
+  when: not vendor_folder.stat.exists
+
+- name: composer install
+  composer: working_dir="{{ folder }}"
+  when: not vendor_folder.stat.exists
+
+- name: init yii2
+  shell: cd {{ folder }} && ./init --env={{ env }} --overwrite=All
+
+- name: run migrations
+  shell: cd {{ folder }} && ./yii migrate --interactive=0

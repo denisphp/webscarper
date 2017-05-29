@@ -1,0 +1,15 @@
+- hosts: dev
+  sudo: true
+  gather_facts: true
+  vars_files:
+    - "vars/dev.yml"
+  roles:
+#    - initial
+#    - php-ubuntu
+#    - nginx
+#    - phpredis
+#    - redis
+#    - pgsql
+#    - phppgadmin
+#    - composer
+    - finally
