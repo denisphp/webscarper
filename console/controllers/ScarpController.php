@@ -30,17 +30,17 @@ class ScarpController extends Controller
             return 1;
         }
 
-        $flowUrl = \Yii::$app->params['habra.flow.url'] . '/' . $flow . '/page1';
-
-        if ($dom = $this->loadPage($flowUrl)) {
+        $page = \Yii::$app->params['habra.flow.url'] . '/' . $flow . '/page1';
+        $dom = $this->loadPage($page);
+        if ($dom) {
             $nodes = \Yii::$app->scarper->getNodes($dom, \Yii::$app->params['habra.postLink.xpath']);
             foreach ($nodes as $node) {
                 /**@var $node \DOMElement */
-                $href = $node->getAttribute('href');
-                $articleDom = $this->loadPage($href);
-                $exists = \Yii::$app->article->exists($href);
-                if ($articleDom && !$exists) {
-                    \Yii::$app->article->createNewRecord($href, $articleDom, $flowId);
+                $articleUrl = $node->getAttribute('href');
+                $exists = \Yii::$app->article->exists($articleUrl);
+                if (!$exists) {
+                    $articleDom = $this->loadPage($articleUrl);
+                    \Yii::$app->article->createNewRecord($articleUrl, $articleDom, $flowId);
                 }
             }
         }
