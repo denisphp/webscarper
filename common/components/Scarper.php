@@ -4,7 +4,7 @@ namespace common\components;
 
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\ClientException;
 use yii\base\Exception;
 
 class Scarper
@@ -28,7 +28,7 @@ class Scarper
     {
         try {
             $response = $this->webClient->get($page);
-        } catch (ConnectException $e) {
+        } catch (ClientException $e) {
             throw new Exception($e->getMessage());
         }
 
