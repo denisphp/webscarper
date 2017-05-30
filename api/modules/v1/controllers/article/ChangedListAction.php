@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 
 /**
- * Class DeletedListAction
+ * Class ChangedListAction
  *
  * @package api\modules\v1\controllers\article
  */
