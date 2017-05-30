@@ -1,4 +1,10 @@
 # Install pecl package
+- name: download Libxdiff
+  shell: creates="/tmp/libxdiff-0.22.tar.gz" wget -O - "http://www.xmailserver.org/libxdiff-0.22.tar.gz" | tar -xz -C /tmp
+
+- name: install Libxdiff
+  shell: cd "/tmp/libxdiff-0.22" && ./configure && make && make install
+
 - pear:
     name: pecl/xdiff
     state: present
