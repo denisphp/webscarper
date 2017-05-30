@@ -9,7 +9,7 @@ class ArticleController extends BaseApiController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator']['except'] = ['list', 'view', 'versions-diff', 'changed-list'];
+        $behaviors['authenticator']['except'] = ['list', 'view', 'diff', 'changed-list'];
 
         return $behaviors;
     }
@@ -19,7 +19,7 @@ class ArticleController extends BaseApiController
         return [
             'list' => ['get'],
             'view' => ['get'],
-            'version-diff' => ['get'],
+            'diff' => ['get'],
             'changed-list' => ['get'],
         ];
     }
@@ -29,7 +29,7 @@ class ArticleController extends BaseApiController
         return [
             'list' => 'api\modules\v1\controllers\article\ListAction',
             'view' => 'api\modules\v1\controllers\article\ViewAction',
-            'versions-diff' => 'api\modules\v1\controllers\article\VersionsDiffAction',
+            'diff' => 'api\modules\v1\controllers\article\VersionsDiffAction',
             'changed-list' => 'api\modules\v1\controllers\article\ChangedListAction'
         ];
     }
