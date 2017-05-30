@@ -20,7 +20,6 @@ packages: [
 ########## nginx ###############
 nginx_php_version: "7.0"
 nginx_vhosts: [
-    { server_name: 'webscarper.local', root: '{{ folder }}/frontend/web', template: 'yii'},
     { server_name: 'api.webscarper.local', root: '{{ folder }}/api/web', template: 'yii'},
     { server_name: 'db.webscarper.local', root: '/usr/share/phppgadmin', template: 'php'}
 ]
