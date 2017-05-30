@@ -2,6 +2,8 @@
 
 namespace common\helpers;
 
+use yii\helpers\ArrayHelper;
+
 class Flow
 {
     const DEVELOP = 1;
@@ -59,5 +61,10 @@ class Flow
             return $list[$key]['type'];
         }
         return null;
+    }
+
+    public static function getIds()
+    {
+        return ArrayHelper::getColumn(self::getList(), 'type');
     }
 }

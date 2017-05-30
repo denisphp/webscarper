@@ -5,6 +5,12 @@ use common\models\gii\ArticleGii;
 use common\models\query\ArticleQuery;
 use yii\behaviors\TimestampBehavior;
 
+/**
+ * Class Article
+ *
+ * @package common\models
+ * @property ArticleContent[] $articleContent
+ */
 class Article extends ArticleGii
 {
     const STATUS_ACTIVE = 1;
@@ -28,6 +34,9 @@ class Article extends ArticleGii
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -36,13 +45,24 @@ class Article extends ArticleGii
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getArticleContent()
     {
         return $this->hasMany(ArticleContent::className(), ['article_id' => 'id']);
     }
 
+    /**
+     * @return ArticleQuery
+     */
     public static function find()
     {
         return new ArticleQuery(get_called_class());
+    }
+
+    public static function findById($id)
+    {
+        return static::findOne(['id' => $id]);
     }
 }
