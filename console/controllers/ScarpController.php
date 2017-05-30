@@ -33,16 +33,16 @@ class ScarpController extends Controller
         }
 
         $page = \Yii::$app->params['habra.flow.url'] . '/' . $flow . '/page1';
-        $dom = \Yii::$app->scarper->load($page);
-        if ($dom) {
-            $nodes = \Yii::$app->scarper->getNodes($dom, \Yii::$app->params['habra.postLink.xpath']);
+        $response = \Yii::$app->scarper->load($page);
+        if ($response['code'] === 200) {
+            $nodes = \Yii::$app->scarper->getNodes($response['dom'], \Yii::$app->params['habra.postLink.xpath']);
             foreach ($nodes as $node) {
                 /**@var $node \DOMElement */
                 $articleUrl = $node->getAttribute('href');
                 $exists = \Yii::$app->article->exists($articleUrl);
-                if (!$exists) {
-                    $articleDom = \Yii::$app->scarper->load($articleUrl);
-                    \Yii::$app->article->createNewRecord($articleUrl, $articleDom, $flowId);
+                $res = \Yii::$app->scarper->load($articleUrl);
+                if (!$exists && ($res['code'] === 200)) {
+                    \Yii::$app->article->createNewRecord($articleUrl, $res['dom'], $flowId);
                 }
             }
         }
@@ -68,9 +68,9 @@ class ScarpController extends Controller
         foreach ($query->each() as $article) {
             /**@var ArticleContent $articleContent */
             $articleContent = $article->articleContent[0];
-            $articleDom = \Yii::$app->scarper->load($article->url);
-            if ($articleDom) {
-                $articleBody = \Yii::$app->scarper->getNode($articleDom, \Yii::$app->params['habra.postBody.xpath']);
+            $response = \Yii::$app->scarper->load($article->url);
+            if ($response['code'] === 200) {
+                $articleBody = \Yii::$app->scarper->getNode($response['dom'], \Yii::$app->params['habra.postBody.xpath']);
                 if (\Yii::$app->text->diff($articleContent->html, $articleBody->nodeValue)) {
                     $content = new ArticleContent();
                     $content->article_id = $article->id;
@@ -78,7 +78,7 @@ class ScarpController extends Controller
                     $content->version = $articleContent->version + 1;
                     $content->save();
                 }
-            } else {
+            } elseif($response['code'] === 404) {
                 $article->status = Article::STATUS_DELETED;
                 $article->save();
             }

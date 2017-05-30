@@ -2,9 +2,8 @@
 
 namespace common\components;
 
-
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 use yii\base\Component;
 use yii\base\Exception;
 use DOMDocument;
@@ -17,8 +16,6 @@ class Scarper extends Component
      */
     private $webClient;
 
-    protected $_errors = [];
-
     public function init()
     {
         $this->webClient = new Client();
@@ -26,24 +23,31 @@ class Scarper extends Component
 
     /**
      * @param $page
-     * @return DOMDocument|null
+     * @return mixed
      */
     public function load($page)
     {
         try {
-            $response = $this->webClient->get($page);
-            $html = $response->getBody();
-            $dom = new DOMDocument();
+            $response = $this->webClient->get($page, ['exceptions' => false]);
 
-            libxml_use_internal_errors(true);
-            $dom->loadHTML($html);
-            libxml_clear_errors();
-        } catch (ClientException $e) {
-            $this->_errors[] = $e->getMessage();
-            return null;
+            $data['code'] = $response->getStatusCode();
+            $data['message'] = $response->getReasonPhrase();
+
+            if ($data['code'] === 200) {
+                $html = $response->getBody();
+                $dom = new DOMDocument();
+
+                libxml_use_internal_errors(true);
+                $dom->loadHTML($html);
+                libxml_clear_errors();
+                $data['dom'] = $dom;
+            }
+        } catch (ConnectException $e) {
+            $data['code'] = $e->getCode();
+            $data['message'] = $e->getMessage();
         }
 
-        return $dom;
+        return $data;
     }
 
     /**
