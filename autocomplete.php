@@ -20,6 +20,7 @@ class Yii extends \yii\BaseYii
  *
  * @property \common\components\Scarper $scarper
  * @property \common\components\Article $article
+ * @property \common\components\Text $text
  *
  */
 abstract class BaseApplication extends yii\base\Application

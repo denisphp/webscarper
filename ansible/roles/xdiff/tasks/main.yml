@@ -1,0 +1,25 @@
+# Install pecl package
+- pear:
+    name: pecl/xdiff
+    state: present
+
+- name: detect php version
+  shell: chdir=/tmp php -v | grep -Eow '^PHP [^ ]+'| awk '{ print $2 }' | awk -F '-' '{print $1}'
+  register: php_version_command
+
+- set_fact: php_version="{{ php_version_command.stdout.split('.') }}"
+
+- set_fact: php_version="{{ [php_version[0], php_version[1]]|join('.') }}"
+
+- stat: path="/etc/php/{{ php_version }}/fpm/conf.d/"
+  register: php_fpm_conf_d
+
+- name: install xdiff for php 5.5 and greater
+  shell: creates="/etc/php/{{ php_version }}/mods-available/xdiff.ini" touch "/etc/php/{{ php_version }}/mods-available/xdiff.ini" && echo extension=xdiff.so > "/etc/php/{{ php_version }}/mods-available/xdiff.ini"
+  when: php_version | version_compare('5.5', operator='>=' )
+
+- name: install xdiff for php 5.5 and greater (PHP-FPM)
+  shell: creates=/etc/php/{{ php_version }}/fpm/conf.d/xdiff.ini ln -s /etc/php/{{ php_version }}/mods-available/xdiff.ini /etc/php/{{ php_version }}/fpm/conf.d/xdiff.ini
+  when: php_version | version_compare('5.5', operator='>=' ) and php_fpm_conf_d.stat.isdir is defined and php_fpm_conf_d.stat.isdir
+  notify:
+    - restart php-fpm
