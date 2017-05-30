@@ -14,6 +14,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $status
+ * @property boolean $is_changed
  */
 class ArticleGii extends \yii\db\ActiveRecord
 {
@@ -33,6 +34,7 @@ class ArticleGii extends \yii\db\ActiveRecord
         return [
             [['flow', 'created_at', 'updated_at', 'status'], 'integer'],
             [['title', 'url'], 'string'],
+            [['is_changed'], 'boolean'],
             [['created_at', 'updated_at'], 'required'],
         ];
     }
@@ -50,6 +52,7 @@ class ArticleGii extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
+            'is_changed' => 'Is Changed'
         ];
     }
 }

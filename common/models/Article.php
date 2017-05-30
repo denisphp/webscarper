@@ -41,7 +41,9 @@ class Article extends ArticleGii
     {
         return [
             [['flow', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['is_changed'], 'boolean'],
             [['title', 'url'], 'string'],
+            ['url', 'unique']
         ];
     }
 
