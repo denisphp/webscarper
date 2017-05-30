@@ -16,6 +16,11 @@ class Article extends ArticleGii
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
 
+    public static $statuses = [
+        self::STATUS_ACTIVE => 'Active',
+        self::STATUS_DELETED => 'Deleted',
+    ];
+
     /**
      * @inheritdoc
      */
