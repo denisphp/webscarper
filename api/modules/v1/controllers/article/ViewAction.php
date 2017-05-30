@@ -18,27 +18,20 @@ class ViewAction extends BaseApiAction
     {
         return [
             ['id', 'required'],
-            ['id', 'integer']
+            ['id', 'integer'],
+            ['version', 'integer']
         ];
     }
 
-    public function run($id)
+    public function run()
     {
-        $model = Article::find()
-            ->where(['article.status' => Article::STATUS_ACTIVE])
-            ->andWhere(['article.id' => $id])
-            ->joinWith([
-               'articleContent ac' => function ($query) {
-                   $query->orderBy('ac.id DESC');
-                }
-            ])
-            ->one();
-        /**@var $model Article*/
+        $query = $this->getQuery();
+        $model = $query->one();
         if ($model) {
+            /**@var $model Article */
             $content = $model->articleContent[0];
             $article = ArrayHelper::merge($model->toArray(), [
-                'current_version' => $content->version,
-                'current_html' => $content->html,
+                'html' => $content->html,
             ]);
 
             return ['article' => $article];
@@ -47,11 +40,29 @@ class ViewAction extends BaseApiAction
         return new DataValidationHttpException('Article not found.');
     }
 
+    protected function getQuery()
+    {
+        $query = Article::find()
+            ->where(['article.status' => Article::STATUS_ACTIVE])
+            ->andWhere(['article.id' => $this->model->id])
+            ->joinWith([
+                'articleContent ac' => function ($query) {
+                    if ($this->model->version) {
+                        $query->andWhere(['ac.version' => $this->model->version]);
+                    }
+                    $query->orderBy('ac.id DESC');
+                }
+            ]);
+
+        return $query;
+    }
+
     public function description()
     {
         return '
         GET Parameters:
-            "id" integer (required)
+            "id" integer (required),
+            "version" integer (optional)
         ';
     }
 }
