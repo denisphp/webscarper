@@ -3,7 +3,6 @@
 namespace api\modules\v1\controllers\article;
 
 use api\components\BaseApiAction;
-
 use api\models\Article;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
