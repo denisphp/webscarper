@@ -3,6 +3,8 @@
 namespace console\controllers;
 
 use common\helpers\Flow;
+use common\models\Article;
+use common\models\ArticleContent;
 use yii\console\Controller;
 use yii\helpers\Console;
 
@@ -42,6 +44,43 @@ class ScarpController extends Controller
                     $articleDom = \Yii::$app->scarper->load($articleUrl);
                     \Yii::$app->article->createNewRecord($articleUrl, $articleDom, $flowId);
                 }
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Scarp specific article from detect if it has changed
+     *
+     *
+     * @return int the status of the action execution. 0 means normal, other values mean abnormal.
+     */
+    public function actionArticleVersion()
+    {
+        $query = Article::find()
+            ->live()
+            ->joinWith([
+                'articleContent ac' => function ($query) {
+                    $query->orderBy('ac.id DESC');
+                }
+            ]);
+        foreach ($query->each() as $article) {
+            /**@var ArticleContent $articleContent */
+            $articleContent = $article->articleContent[0];
+            $articleDom = \Yii::$app->scarper->load($article->url);
+            if ($articleDom) {
+                $articleBody = \Yii::$app->scarper->getNode($articleDom, \Yii::$app->params['habra.postBody.xpath']);
+                if (\Yii::$app->text->diff($articleContent->html, $articleBody->nodeValue)) {
+                    $content = new ArticleContent();
+                    $content->article_id = $article->id;
+                    $content->html = $articleBody->nodeValue;
+                    $content->version = $articleContent->version + 1;
+                    $content->save();
+                }
+            } else {
+                $article->status = Article::STATUS_DELETED;
+                $article->save();
             }
         }
 

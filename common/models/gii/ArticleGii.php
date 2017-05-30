@@ -13,6 +13,7 @@ use Yii;
  * @property string $url
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $status
  */
 class ArticleGii extends \yii\db\ActiveRecord
 {
@@ -30,7 +31,7 @@ class ArticleGii extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['flow', 'created_at', 'updated_at'], 'integer'],
+            [['flow', 'created_at', 'updated_at', 'status'], 'integer'],
             [['title', 'url'], 'string'],
             [['created_at', 'updated_at'], 'required'],
         ];
@@ -48,6 +49,7 @@ class ArticleGii extends \yii\db\ActiveRecord
             'url' => 'Url',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'status' => 'Status',
         ];
     }
 }

@@ -23,3 +23,10 @@
   when: php_version | version_compare('5.5', operator='>=' ) and php_fpm_conf_d.stat.isdir is defined and php_fpm_conf_d.stat.isdir
   notify:
     - restart php-fpm
+
+- stat: path="/etc/php/{{ php_version }}/cli/conf.d/"
+  register: php_cli_conf_d
+
+- name: install PhpRedis for php 5.5 and greater (PHP CLI)
+  shell: creates=/etc/php/{{ php_version }}/cli/conf.d/xdiff.ini ln -s /etc/php/{{ php_version }}/mods-available/xdiff.ini /etc/php/{{ php_version }}/cli/conf.d/xdiff.ini
+  when: php_version | version_compare('5.5', operator='>=' ) and php_cli_conf_d.stat.isdir is defined and php_cli_conf_d.stat.isdir
