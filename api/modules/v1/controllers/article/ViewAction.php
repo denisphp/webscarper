@@ -5,6 +5,7 @@ namespace api\modules\v1\controllers\article;
 use api\components\BaseApiAction;
 use api\models\Article;
 use mobidev\swagger\components\api\DataValidationHttpException;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class ViewAction
@@ -35,14 +36,10 @@ class ViewAction extends BaseApiAction
         /**@var $model Article*/
         if ($model) {
             $content = $model->articleContent[0];
-            $article = [
-                'id' => $model->id,
-                'title' => $model->title,
-                'url' => $model->url,
-                'flow' => $model->flow,
+            $article = ArrayHelper::merge($model->toArray(), [
                 'current_version' => $content->version,
                 'current_html' => $content->html,
-            ];
+            ]);
 
             return ['article' => $article];
         }

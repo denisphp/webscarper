@@ -49,13 +49,9 @@ class ListAction extends BaseApiAction
         foreach ($dataProvider->getModels() as $model) {
             /**@var $model Article */
             $content = $model->articleContent[0];
-            $articles[] =  [
-                'id' => $model->id,
-                'flow' => $model->flow,
-                'title' => $model->title,
-                'url' => $model->url,
+            $articles[] = ArrayHelper::merge($model->toArray(), [
                 'current_version' => $content->version
-            ];
+            ]);
         }
 
         return [

@@ -3,9 +3,10 @@
 namespace api\modules\v1\controllers\article;
 
 use api\components\BaseApiAction;
-use common\helpers\Flow;
+
 use api\models\Article;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class DeletedListAction
@@ -28,7 +29,49 @@ class ChangedListAction extends BaseApiAction
 
     public function run()
     {
-        return null;
+        $dataProvider = new ActiveDataProvider([
+            'query' => $this->getQuery(),
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_ASC
+                ]
+            ],
+            'pagination' => [
+                'page' => $this->model->page,
+                'pageSize' => $this->model->limit,
+            ],
+        ]);
+
+        $articles = [];
+        foreach ($dataProvider->getModels() as $model) {
+            /**@var $model Article */
+            $content = $model->articleContent[0];
+            $articles[] = ArrayHelper::merge($model->toArray(), [
+                'current_version' => $content->version
+            ]);
+        }
+
+        return [
+            'page' => $dataProvider->getPagination()->getPage(),
+            'limit' => $dataProvider->getPagination()->getLimit(),
+            'total_count' => $dataProvider->getTotalCount(),
+            'count' => $dataProvider->getCount(),
+            'articles' => $articles
+        ];
+    }
+
+    protected function getQuery()
+    {
+        $query = Article::find()
+            ->where(['status' => Article::STATUS_ACTIVE])
+            ->andWhere(['is_changed' => true])
+            ->joinWith([
+                'articleContent ac' => function ($query) {
+                    $query->orderBy('ac.id DESC');
+                }
+            ]);
+
+        return $query;
     }
 
     public function description()
