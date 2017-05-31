@@ -31,9 +31,13 @@ class ViewAction extends BaseApiAction
 
     protected function getDictionary()
     {
+        $flows = [];
+        foreach (Flow::getList() as $flow){
+            $flows[$flow['name']] = $flow['type'];
+        }
         return [
             'article' => [
-                'flow' => Flow::getList(),
+                'flow' => $flows,
                 'status' => array_flip(Article::$statuses),
             ]
         ];
