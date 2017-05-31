@@ -65,7 +65,7 @@ class Scarper extends Component
         $nodes = $this->getNodes($dom, $xpath, $parent);
 
         if ($nodes->length === 0) {
-            throw new Exception("No matching node found");
+            return null;
         }
 
         return $nodes[0];

@@ -16,25 +16,26 @@ class Article extends Component
         if ($response['code'] === 200) {
             $bodyNode = \Yii::$app->scarper->getNode($response['dom'], \Yii::$app->params['postBody.xpath']);
             $titleNode = \Yii::$app->scarper->getNode($response['dom'], \Yii::$app->params['postTitle.xpath']);
+            if ($bodyNode && $titleNode){
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    $article = new Post();
+                    $article->flow = $flow;
+                    $article->title = $titleNode->nodeValue;
+                    $article->url = $url;
 
-            $transaction = \Yii::$app->db->beginTransaction();
-            try {
-                $article = new Post();
-                $article->flow = $flow;
-                $article->title = $titleNode->nodeValue;
-                $article->url = $url;
+                    if ($article->save()) {
+                        $content = new Content();
+                        $content->article_id = $article->id;
+                        $content->html = $bodyNode->nodeValue;
+                        $content->save();
+                    }
 
-                if ($article->save()) {
-                    $content = new Content();
-                    $content->article_id = $article->id;
-                    $content->html = $bodyNode->nodeValue;
-                    $content->save();
+                    $transaction->commit();
+                    return $article;
+                } catch (Exception $e) {
+                    $transaction->rollBack();
                 }
-
-                $transaction->commit();
-                return $article;
-            } catch (Exception $e) {
-                $transaction->rollBack();
             }
         }
 
