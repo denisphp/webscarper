@@ -10,5 +10,10 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # m h dom mon dow user	command
 
 #clear expired session tokens of user
-30 */4 * * * www-data {{ folder }}/yii article/create
+30 */2 * * * www-data {{ folder }}/yii article/create develop
+30 */2 * * * www-data {{ folder }}/yii article/create admin
+30 */2 * * * www-data {{ folder }}/yii article/create design
+30 */2 * * * www-data {{ folder }}/yii article/create management
+30 */2 * * * www-data {{ folder }}/yii article/create marketing
+30 */2 * * * www-data {{ folder }}/yii article/create misc
 0 0 * * * www-data {{ folder }}/yii article/update
