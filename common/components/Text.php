@@ -13,7 +13,6 @@ class Text extends Component
             $diff = xdiff_string_diff($from, $to);
             if ($diff) {
                 $diff = explode("\n", $diff);
-
                 foreach ($diff as $line) {
                     if (!strlen($line)) {
                         continue;
