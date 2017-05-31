@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 
 /**
  * Class ViewAction
+ *
  * @package api\modules\v1\controllers\dictionary
  */
 class ViewAction extends BaseApiAction
@@ -32,7 +33,7 @@ class ViewAction extends BaseApiAction
     protected function getDictionary()
     {
         $flows = [];
-        foreach (Flow::getList() as $flow){
+        foreach (Flow::getList() as $flow) {
             $flows[$flow['name']] = $flow['type'];
         }
         return [
