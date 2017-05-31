@@ -88,3 +88,7 @@ pgdb_log_min_duration_statement: 1000
 ############# composer #########
 composer_global_require: "fxp/composer-asset-plugin:^1.3.1"
 ################################
+
+############ cron ##############
+crontab_file: configs/cron/dev/crontab.j2
+################################
