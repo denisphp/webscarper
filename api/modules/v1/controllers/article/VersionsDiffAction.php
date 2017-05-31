@@ -56,7 +56,7 @@ class VersionsDiffAction extends BaseApiAction
             return ['article' => $article];
         }
 
-        return new DataValidationHttpException('Article with given versions does not exist.');
+        return new DataValidationHttpException('Requested versions was not found for this article.');
     }
 
     public function description()
