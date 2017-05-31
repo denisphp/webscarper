@@ -5,6 +5,7 @@ namespace api\modules\v1\controllers\dictionary;
 use api\components\BaseApiAction;
 use common\helpers\Flow;
 use common\models\Article;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class ViewAction
