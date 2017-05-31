@@ -36,7 +36,7 @@ class ListAction extends BaseApiAction
             'query' => $this->getQuery(),
             'sort' => [
                 'defaultOrder' => [
-                    'created_at' => SORT_ASC
+                    'created_at' => SORT_DESC
                 ]
             ],
             'pagination' => [
@@ -66,7 +66,7 @@ class ListAction extends BaseApiAction
     protected function getQuery()
     {
         $query = Article::find()
-            ->where(['status' => $this->model->status])
+            ->where(['article.status' => $this->model->status])
             ->joinWith([
                 'articleContent ac' => function ($query) {
                     $query->orderBy('ac.id DESC');
@@ -74,7 +74,7 @@ class ListAction extends BaseApiAction
             ]);
 
         if ($this->model->flow){
-            $query->andWhere(['flow' => $this->model->flow]);
+            $query->andWhere(['article.flow' => $this->model->flow]);
         }
 
         return $query;
