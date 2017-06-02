@@ -2,7 +2,7 @@
     "name": "webscarper",
     "description": "Web Scarper",
     "type": "project",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
         {
