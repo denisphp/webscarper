@@ -28,23 +28,23 @@ Below, you’ll find a full listing of all the available endpoints.
 
 ## Installation
 
-### Download and Install Vagrant
-### Install Vagrant plugins
+* Download and Install Vagrant
+* Install Vagrant plugins
 ```
 vagrant plugin install vagrant-vbguest vagrant-cachier vagrant-hostsupdater vagrant-host-shell
 ```
-### Install Ansible
+* Install Ansible
 ```
 sudo apt-add-repository ppa:rquillo/ansible
 sudo apt-get update
 sudo apt-get install ansible
 ```
-### Install Virtual Box
-### Install packages required for Network File System
+* Install Virtual Box
+* Install packages required for Network File System
 ```
 sudo apt-get install nfs-kernel-server nfs-common portmap
 ```
-### Run vagrant
+* Run vagrant
 ```
 cd /var/www/webscarper/
 vagrant up
