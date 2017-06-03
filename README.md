@@ -57,3 +57,11 @@ After installation you should be able to use resources
 http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json
 http://db.webscarper.local
 ```
+
+## Unit tests
+
+Tests for common classes are located in common/tests. In this template there are only unit tests. Execute them by running:
+cd /var/www/webscarper/
+vagrant ssh
+cd /var/www/webscarper/
+vendor/bin/codecept run -- -c common
