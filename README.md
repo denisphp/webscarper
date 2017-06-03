@@ -29,13 +29,13 @@ Below, you’ll find a full listing of all the available endpoints.
 
 ### Article
 
-* GET /article/list List the publications of a site.
-* GET /article/view Get metadata about the specific publication.
-* GET /article/diff Get difference between versions of the specific publication.
-* GET /article/changed-list List the publications that have changed and has more than one version.
+* GET /article/list          => List the publications of a site.
+* GET /article/view          => Get metadata about the specific publication.
+* GET /article/diff          => Get difference between versions of the specific publication.
+* GET /article/changed-list  => List the publications that have changed and has more than one version.
 
 ### Dictionary
-* GET /dictionary/view List of API constants
+* GET /dictionary/view       -> List of API constants
 
 ## Installation
 
