@@ -23,9 +23,8 @@ cd /var/www/webscarper/
 ```
 
 ## API
-
-The documentation for recent version of the API available after installation by http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json.
 Base URL is http://api.webscarper.local/v1.
+The documentation for recent version of the API available after installation by http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json.
 Below, you’ll find a full listing of all the available endpoints.
 
 ### Article
