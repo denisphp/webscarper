@@ -13,13 +13,13 @@ Also you can grab new publications manually by using console commands:
 ```
 * vagrant ssh
 * cd /var/www/webscarper/
-./yii article/create
+* ./yii article/create
 ```
 * Check and update publication versions
 ```
 * vagrant ssh
 * cd /var/www/webscarper/
-./yii article/update
+* ./yii article/update
 ```
 
 ## API
