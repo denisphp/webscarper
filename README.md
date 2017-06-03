@@ -8,7 +8,19 @@ The script works by crawling https://habrahabr.ru/ flow pages looking for public
 It scans all publications on each flow and if it finds any it takes URL of publication and goes by it URL grab title, html and stores to PostgreSQL.
 Web scarper has console application which is scan resources in background every 2 hours looking for new publications and once a day for getting publication versions if any.
 Frequency of scanning can be easily changed by changing /etc/crontab.
-All available publications can be viewed by API.
+Also you can grab new publications manually by using console commands:
+* Get new articles
+```
+* vagrant ssh
+* cd /var/www/webscarper/
+./yii article/create
+```
+* Check and update publication versions
+```
+* vagrant ssh
+* cd /var/www/webscarper/
+./yii article/update
+```
 
 ## API
 
