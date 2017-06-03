@@ -12,7 +12,7 @@ All available publications can be viewed by API.
 
 ### API
 ------------
-The documentation for recent version of the API available by http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json
+The documentation for recent version of the API available by http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json.
 Base URL is http://api.webscarper.local/v1
 Below, you’ll find a full listing of all the available endpoints.
 
