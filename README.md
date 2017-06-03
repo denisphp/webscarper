@@ -3,7 +3,7 @@ scraper
 An auto-scraper for https://habrahabr.ru/ written in PHP on Yii2 Framework.
 
 ## How it Works
-------------
+
 The script works by crawling https://habrahabr.ru/ flow pages looking for publications.
 It scans all publications on each flow and if it finds any it takes URL of publication and goes by it URL grab title, html and stores to PostgreSQL.
 Web scarper has console application which is scan resources in background every 2 hours looking for new publications and once a day for getting publication's version if any.
@@ -11,7 +11,7 @@ Frequency of scanning can be easily changed by changing /etc/crontab.
 All available publications can be viewed by API.
 
 ## API
-------------
+
 The documentation for recent version of the API available by http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json.
 Base URL is http://api.webscarper.local/v1.
 Below, you’ll find a full listing of all the available endpoints.
@@ -27,7 +27,7 @@ Below, you’ll find a full listing of all the available endpoints.
 * GET /dictionary/view List of API constants
 
 ## Installation
-------------
+
 ### Download and Install Vagrant
 ### Install Vagrant plugins
 ```
@@ -51,7 +51,7 @@ vagrant up
 ```
 
 ## Usage
-------------
+
 After installation you should be able to use resources
 ```
 http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json
