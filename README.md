@@ -72,6 +72,8 @@ http://db.webscarper.local
 ## Unit tests
 
 Tests for common classes are located in common/tests. In this template there are only unit tests. Execute them by running:
+```
 $ vagrant ssh
 $ cd /var/www/webscarper/
 $ vendor/bin/codecept run -- -c common
+```
