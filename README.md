@@ -11,15 +11,15 @@ Frequency of scanning can be easily changed by changing /etc/crontab.
 Also you can grab new publications manually by using console commands:
 * Get new articles
 ```
-* vagrant ssh
-* cd /var/www/webscarper/
-* ./yii article/create
+vagrant ssh
+cd /var/www/webscarper/
+./yii article/create
 ```
 * Check and update publication versions
 ```
-* vagrant ssh
-* cd /var/www/webscarper/
-* ./yii article/update
+vagrant ssh
+cd /var/www/webscarper/
+./yii article/update
 ```
 
 ## API
