@@ -10,6 +10,22 @@ Web scarper has console application which is scan resources in background every 
 Frequency of scanning can be easily changed by changing /etc/crontab.
 All available publications can be viewed by API.
 
+### API
+------------
+The documentation for recent version of the API available by http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json
+Base URL is http://api.webscarper.local/v1
+Below, you’ll find a full listing of all the available endpoints.
+
+## Article
+
+* GET /article/list List the publications of a site.
+* GET /article/view Get metadata about the specific publication.
+* GET /article/diff Get difference between versions of the specific publication.
+* GET /article/changed-list List the publications that have changed and has more than one version.
+
+## Dictionary
+* GET /dictionary/view List of API constants
+
 ### Installation
 ------------
 ## Download and Install Vagrant
