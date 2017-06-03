@@ -32,3 +32,10 @@ sudo apt-get install nfs-kernel-server nfs-common portmap
 cd /var/www/webscarper/
 vagrant up
 ```
+
+### Usage
+After installation you should be able to use resources
+```
+http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json
+http://db.webscarper.local
+```
