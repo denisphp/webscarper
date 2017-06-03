@@ -13,7 +13,7 @@ All available publications can be viewed by API.
 ### Installation
 ------------
 ## Download and Install Vagrant
-## install Vagrant plugins
+## Install Vagrant plugins
 ```
 vagrant plugin install vagrant-vbguest vagrant-cachier vagrant-hostsupdater vagrant-host-shell
 ```
