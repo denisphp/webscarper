@@ -11,6 +11,7 @@ Frequency of scanning can be easily changed by changing /etc/crontab.
 All available publications can be viewed by API.
 
 ### Installation
+------------
 ## Download and Install Vagrant
 ## install Vagrant plugins
 ```
@@ -34,6 +35,7 @@ vagrant up
 ```
 
 ### Usage
+------------
 After installation you should be able to use resources
 ```
 http://api.webscarper.local/swagger/?url=http://api.webscarper.local/swagger.json
